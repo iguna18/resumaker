@@ -5,13 +5,13 @@ const formSlice = createSlice({
   name: 'form',
   initialState: {},
   reducers: {
-    updateField: (state, action) => {
-      const { fieldName, value } = action.payload;
-      state[fieldName] = value;
+    setField: (state, action) => {
+      const { fieldName, fieldValue } = action.payload;
+      state[fieldName] = fieldValue;
     },
   },
 });
 
-export const { updateField } = formSlice.actions;
+export const { setField } = formSlice.actions;
 export default formSlice.reducer;
 

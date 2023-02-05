@@ -10,7 +10,7 @@ export default ({children}) => {
 
     <div style={{display:'flex', flexDirection:'column', height:'100%', justifyContent:'space-between'}}>
       <div>
-        <div style={{display:'flex', justifyContent:'space-between', marginTop:'1em'}}>
+        <div style={{display:'flex', justifyContent:'space-between', marginTop:'15px',width:'90%'}}>
             <div>{['','პირადი ინფო', 'გამოცდილება', 'განათლება'].at(pageid)}</div>
             <div>{pageid}/3</div>
         </div>

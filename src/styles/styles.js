@@ -7,9 +7,14 @@ export const Strip = styled.div`
   overflow-y: auto;
 `
 export const Input = styled.input`
-  width: 100%; 
   /* box-sizing: border-box;  */
   /* padding: 10px */
+  width: 100%; 
+  ${props => props.type === "number" && `
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield;
+  `}
 `
 export const Divider = styled.hr`
   margin-bottom:45px;
