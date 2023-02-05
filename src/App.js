@@ -1,8 +1,11 @@
 import logo from './logo.svg'
-import './App.css'
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"
 import Cv from './components/cv'
-import { Strip } from './styles/styles'
+import { Strip, Input } from './styles/styles'
+import {FaChevronCircleLeft} from 'react-icons/fa'
+import General from './components/General'
+
+
 
 const Container = ({ children }) => (
   <div style={{ display: "flex", flexDirection: "row", height:"100vh" }}>
@@ -16,31 +19,23 @@ const NotFoundPage = () => <div>404: Page Not Found</div>;
 const App = () => (
   <Router>
   <Container>
-    <Strip>
-      {'<'}
+    <Strip style={{display: 'flex', justifyContent: 'center'}}>
+      <div style={{height:'fit-content', marginTop:'1em'}}>
+        <FaChevronCircleLeft color='white' size='18'/>
+      </div>
     </Strip>
     <Strip wide>
       <Routes>
-      <Route path="/generalinformation" element={
-          <form>
-          <label htmlFor="name">Name:</label>
-          <br/>
-          <input type="text" id="name" name="name"/>
-          <br/>
-          <label htmlFor="email">Email:</label>
-          <br/>
-          <input type="email" id="email" name="email"/>
-          </form>
-      } />
+      <Route path="/generalinformation" element={<General/>} />
       <Route path="/experience" element={
           <form>
           <label htmlFor="position">position:</label>
           <br/>
-          <input type="text" id="position" name="position"/>
+          <Input type="text" id="position" name="position"/>
           <br/>
           <label htmlFor="employer">employer:</label>
           <br/>
-          <input type="text" id="employer" name="employer"/>
+          <Input type="text" id="employer" name="employer"/>
           </form>
       } />  
       </Routes>
