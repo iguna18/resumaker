@@ -1,52 +1,47 @@
 import {useState} from "react"
 import { Input } from "../styles/styles"
-import styled from "styled-components"
+import {Divider} from "../styles/styles"
+import Field from "./Field";
 
-const Validation = styled.div`
-  position: absolute;
-  color: ${props => props.err ? 'red' : 'green'};
-  left: ${props => props.err ? '98%' : '98%'};
-  top:0px
-`
-const Divider = styled.div`
-  margin-bottom:'2em';
-  margin-top:'0.3em'; 
-  height:1;
-  background-color:'black'
-`
+const PHONE_REGEX = /^(\+995)(79\d{7}|5\d{8})$/ ;
+
 export default () => {
   const [email, setEmail] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+
+  const [number, setNumber] = useState("");
+  const [isValidNumber, setIsValidNumber] = useState(false);
+
+  const handleNumberChange = (event) => {
+    setNumber(event.target.value)
+    setIsValidNumber(PHONE_REGEX.test(number));
+  };
+
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-    setIsValid(event.target.value.slice(-12) == '@redberry.ge');
+    setIsValidEmail(event.target.value.slice(-12) == '@redberry.ge');
   };
   return (
     <>
-    <div style={{display:'flex', justifyContent:'space-between', marginTop:'1em'}}>
-    <div>პირადი ინფო</div>
-    <div>1/3</div>
-    </div>
+      <div style={{width:'94%', display:'flex', flexDirection:'column'}}>
+        <div style={{display:'flex'}}>
+          <div style={{flex:1}}>
+            <Field geoName={'სახელი'} name={'firstName'} under={'მინიმუმ 2 ასო, ქართული ასოები'} isSmall greensign/>
+          </div>
+          <div style={{flex:1}}>
+            <Field geoName={'გვარი'} name={'lastName'} under={'მინიმუმ 2 ასო, ქართული ასოები'} greensign/>
+          </div>
+        </div>
 
-    <form>
-    <Validation>UDG</Validation>
-    <label htmlFor="name">Name:</label>
-    <div style={{position: 'relative'}}>
-      <Validation>&#10003;</Validation>
-      <Input type="text" id="name" name="name" placeholder='saxeli' />
-    </div>
-    <label htmlFor="email">Email:</label>
-    <div style={{position: 'relative'}}>
-      <Validation>&#10003;</Validation>
-      <Validation err>&#10007;</Validation>
-      <Input type="email" id="email" name="email"
-        value={email}
-        onChange={handleEmailChange}
-        required/>
-    </div>
-    </form>
-    
+        <Field geoName={'ჩემს შესახებ (არასავალდებულო)'} type={'textfield'}/>
+        <Field geoName={'ელ-ფოსტა'} name='email' under={'უნდა მთავრდებოდეს @redberry.ge-ით'}
+          onChange={handleEmailChange} value={email} type={'email'} isRequired greensign/>
+        <Field geoName={'მობილურის ნომერი'} type={'number'} name={'number'}
+          onChange={handleNumberChange} value={number}
+          under={'უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს'} greensign/>
+      
+      </div>
     </>
   )
 }

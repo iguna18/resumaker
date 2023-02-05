@@ -3,7 +3,7 @@ import {BsFillCompassFill} from 'react-icons/bs'
 
 function Cv() {
   return (
-    <div style={{ backgroundColor:"white", display: "flex", flexDirection: "column", height:'100vh',
+    <div style={{ backgroundColor:"white", display: "flex", flexDirection: "column", height:'100%',
                     padding: "1em 2em"}}>
       <div style={{ flex: 1 }}> p1 </div>
       <div style={{ flex: 1 }}>Part 2</div>

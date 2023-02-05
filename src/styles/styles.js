@@ -8,6 +8,11 @@ export const Strip = styled.div`
 `
 export const Input = styled.input`
   width: 100%; 
-  box-sizing: border-box; 
-  padding: 10px
+  /* box-sizing: border-box;  */
+  /* padding: 10px */
+`
+export const Divider = styled.hr`
+  margin-bottom:45px;
+  margin-top:10px;
+  /* border-stop: 0.5px solid black */
 `
