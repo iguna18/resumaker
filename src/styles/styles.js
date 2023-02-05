@@ -14,5 +14,5 @@ export const Input = styled.input`
 export const Divider = styled.hr`
   margin-bottom:45px;
   margin-top:10px;
-  /* border-stop: 0.5px solid black */
+  border-top: 0.5px solid black
 `

@@ -6,7 +6,9 @@ import {FaChevronCircleLeft} from 'react-icons/fa'
 import General from './components/General'
 import Experiences from './components/Experiences'
 import FormWrapper from './components/FormWrapper'
-
+import { useEffect } from 'react'
+import { updateField } from './reducers/slices'
+import { useDispatch } from 'react-redux'
 
 const Container = ({ children }) => (
   <div style={{ display: "flex", flexDirection: "row", height:"100vh" }}>
@@ -17,29 +19,35 @@ const Container = ({ children }) => (
 
 const NotFoundPage = () => <div>404: Page Not Found</div>;
 
-const App = () => (
-  <Router>
-  <Container>
-    <Strip style={{display: 'flex', justifyContent: 'center'}}>
-      <div style={{height:'fit-content', marginTop:'1em'}}>
-        <FaChevronCircleLeft color='white' size='18'/>
-      </div>
-    </Strip>
-    <Strip wide>
-      <FormWrapper>
-        <Routes>
-        <Route path="/1" element={<General/>} />
-        <Route path="/2" element={<Experiences/>} />  
-        <Route path="/3" element={<></>} />  
-        </Routes>
-      </FormWrapper>
-    </Strip>
-    <Strip/>
-    <Strip wide>
-      <Cv/>
-    </Strip>
-  </Container>
-  </Router>
-)
+const App = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+  }, [])
+    
+  return (
+    <Router>
+    <Container>
+      <Strip style={{display: 'flex', justifyContent: 'center'}}>
+        <div style={{height:'fit-content', marginTop:'1em'}}>
+          <FaChevronCircleLeft color='white' size='18'/>
+        </div>
+      </Strip>
+      <Strip wide>
+        <FormWrapper>
+          <Routes>
+          <Route path="/1" element={<General/>} />
+          <Route path="/2" element={<Experiences/>} />  
+          <Route path="/3" element={<></>} />  
+          </Routes>
+        </FormWrapper>
+      </Strip>
+      <Strip/>
+      <Strip wide>
+        <Cv/>
+      </Strip>
+    </Container>
+    </Router>
+  )
+}
 
 export default App
