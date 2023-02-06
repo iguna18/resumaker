@@ -17,9 +17,12 @@ const Validation = styled.div`
 `
 const PHONE_REGEX = /^(\+995)(79\d{7}|5\d{8})$/
 
-const Field = ({under, name, geoName, type, isSmall, nogreensign, otherAtt, placeholder}) => {
+const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, showErrors}) => {
   let value = useSelector((state) => state['form'][name]);
   value = value? value : ''
+  let valueValidity = useSelector((state) => state['form'][`${name}Validity`])
+  if(!valueValidity)
+    valueValidity = false
   
   const dispatch = useDispatch();
   
@@ -43,6 +46,13 @@ const Field = ({under, name, geoName, type, isSmall, nogreensign, otherAtt, plac
           case 'position':
           case 'employer':
             return value.length >= 2
+          case 'workdescription':
+            return value.length > 0
+          case 'aboutMe':
+            return true
+          case 'workstart':
+          case 'workend':
+            return value != ''
           default:
           break;
         }
@@ -51,20 +61,55 @@ const Field = ({under, name, geoName, type, isSmall, nogreensign, otherAtt, plac
   })
     
   const style = {
-    width: isSmall?'90%':'100%'
+    width: isSmall?'85%':'100%'
   }
   
   // To avoid error from destructuring undefined (other attributes for input
   // may or may not be passed)
-  // otherAtt = otherAtt ? otherAtt : {}
+  otherAtt = otherAtt ? otherAtt : {}
+ 
+  const today = new Date()
+  let endDay = useSelector(state => state.form['workend'])
+  let startDay = useSelector(state => state.form['workstart'])
+ //ensuring selected end is not earlier than start or later than today
+  if(name == 'workend') { 
+    if(startDay)
+      otherAtt.min = startDay
+    
+    otherAtt.max = today.toISOString().split("T")[0] 
+  
+    //ensuring selected start is not later than end or today
+  } else if(name == 'workstart') { 
+    if(!endDay)
+      endDay = today.toISOString().split("T")[0] 
+    
+    otherAtt.max = endDay
+  }
+
   return (
     <div style={style}>
       <label htmlFor={name}>{geoName}</label>
       <div style={{position:'relative'}}>
-        {!nogreensign && <Validation>&#10003;</Validation>}
-        <Validation err>&#10007;</Validation>
-        <Input type={type} name={name} placeholder={placeholder}
-          onChange={onChange} value={value} {...otherAtt}/>
+        {
+          ['text','email','number'].some(t=>t==type) && 
+          valueValidity &&
+          <Validation>&#10003;</Validation>
+        }
+        {
+          showErrors &&
+          name != 'aboutMe' &&
+          !valueValidity &&
+         <Validation err>&#10007;</Validation>
+        }
+        {
+          type == 'textarea' ?
+          <textarea name={name} placeholder={placeholder}
+            onChange={onChange} value={value} {...otherAtt}
+            style={{width:'100%', resize: 'none', overflow: 'auto'}}></textarea>
+          :
+          <Input type={type} name={name} placeholder={placeholder}
+            onChange={onChange} value={value} {...otherAtt} />
+        }
       </div>
       {under && <label htmlFor="name" style={{fontSize:'0.5em'}}>{under}</label>}
     </div>

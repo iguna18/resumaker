@@ -1,58 +1,25 @@
+import { useSelector } from "react-redux";
 import Field from "./Field";
+import * as consts from './GeneralConstants'
 
 export default () => {
-  const nameFieldAtt = {
-    type:'text',
-    name:'firstName', 
-    geoName:'სახელი',
-    under:'მინიმუმ 2 ასო, ქართული ასოები',
-    placeholder:'ანზორ',
-    isSmall:true
-  }
-  const lastNameFieldAtt = {
-    type:'text',
-    name:'lastName', 
-    geoName:'გვარი',
-    placeholder:'მუმლაძე',
-    under:'მინიმუმ 2 ასო, ქართული ასოები',
-  }
-  const aboutMeFieldAtt = {
-    type:'textfield',
-    name:'aboutMe', 
-    geoName:'ჩემს შესახებ (არასავალდებულო)',
-    placeholder:'ზოგადი ინფო შენს შესახებ',
-    nogreensign:true
-  }
-  const emailFieldAtt = {
-    type:'email',
-    name:'email', 
-    geoName:'ელ-ფოსტა',
-    placeholder:'anzorr666@redberry.ge',
-    under: 'უნდა მთავრდებოდეს @redberry.ge-ით',
-  }
-  const numberFieldAtt = {
-    type:'number',
-    name:'number', 
-    geoName:'მობილურის ნომერი',
-    placeholder:'+ 995 551 12 34 56',
-    under: 'უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს',
-  }
+  const showErrors = useSelector(state=>state.form['page1Check'])
+
   return (
     <>
-      <div style={{width:'94%', display:'flex', flexDirection:'column'}}>
+      <div style={{ display:'flex', flexDirection:'column'}}>
         <div style={{display:'flex'}}>
           <div style={{flex:1}}>
-            <Field {...nameFieldAtt}/>
+            <Field {...consts.nameFieldAtt} showErrors={showErrors}/>
           </div>
           <div style={{flex:1}}>
-            <Field {...lastNameFieldAtt}/>
+            <Field {...consts.lastNameFieldAtt} showErrors={showErrors}/>
           </div>
         </div>
 
-        <Field {...aboutMeFieldAtt}/>
-        <Field {...emailFieldAtt}/>
-        <Field {...numberFieldAtt}/>
-      
+        <Field {...consts.aboutMeFieldAtt} showErrors={showErrors}/>
+        <Field {...consts.emailFieldAtt} showErrors={showErrors}/>
+        <Field {...consts.numberFieldAtt} showErrors={showErrors}/>
       </div>
     </>
   )

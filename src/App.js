@@ -27,12 +27,12 @@ const App = () => {
   return (
     <Router>
     <Container>
-      <Strip style={{display: 'flex', justifyContent: 'center'}}>
+      <Strip style={{display: 'flex', justifyContent: 'center'}} flex={1}>
         <div style={{height:'fit-content', marginTop:'1em'}}>
           <FaChevronCircleLeft color='white' size='18'/>
         </div>
       </Strip>
-      <Strip wide>
+      <Strip flex={6}>
         <FormWrapper>
           <Routes>
           <Route path="/1" element={<General/>} />
@@ -41,8 +41,8 @@ const App = () => {
           </Routes>
         </FormWrapper>
       </Strip>
-      <Strip/>
-      <Strip wide>
+      {/* <Strip/> */}
+      <Strip flex={5}>
         <Cv/>
       </Strip>
     </Container>

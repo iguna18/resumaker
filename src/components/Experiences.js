@@ -1,47 +1,25 @@
 import React from "react"
 import Field from "./Field"
-export default () => {
-  const positionAtt = {
-    type:'text',
-    name:'position',
-    geoName:'თანამდებობა',
-    under:'მინიმუმ 2 სიმბოლო',
-    placeholder:'დეველოპერი, დიზაინერი, ა.შ.'
-  }
-  const employerAtt = {
-    type:'text',
-    name:'employer',
-    geoName:'დამსაქმებელი',
-    under:'მინიმუმ 2 სიმბოლო',
-    placeholder:'დამსაქმებელი'
-  }
-  const workstartAtt = {
-    type:'date',
-    name:'workstart',
-    geoName:'დაწყების თარიღი',
-    isSmall:true,
-    nogreensign:true
+import * as consts from './ExperiencesConstants'
+import { useSelector } from "react-redux"
 
-  }
-  const workendAtt = {
-    type:'date',
-    name:'workend',
-    geoName:'დამთავრების თარიღი',
-    nogreensign:true
-  }
+export default () => {
+  const showErrors = useSelector(state=>state.form['page2Check'])
+
   return (
 
-    <div style={{width:'94%', flexDirection:''}}>
-      <Field {...positionAtt}/>
-      <Field {...employerAtt}/>
+    <div style={{flexDirection:''}}>
+      <Field {...consts.positionAtt} showErrors={showErrors}/>
+      <Field {...consts.employerAtt} showErrors={showErrors}/>
         <div style={{display:'flex'}}>
           <div style={{flex:1}}>
-            <Field {...workstartAtt}/>
+            <Field {...consts.workstartAtt} showErrors={showErrors}/>
           </div>
           <div style={{flex:1}}>
-            <Field {...workendAtt}/>
+            <Field {...consts.workendAtt} showErrors={showErrors}/>
           </div>
         </div>
+      <Field {...consts.workdescriptionAtt} showErrors={showErrors}/>
     </div>
   )
 }
