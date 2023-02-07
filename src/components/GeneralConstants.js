@@ -4,7 +4,9 @@ export const nameFieldAtt = {
   geoName:'სახელი',
   under:'მინიმუმ 2 ასო, ქართული ასოები',
   placeholder:'ანზორ',
-  isSmall:true
+  isSmall:true,
+  pageid:1,
+  index:0
 }
 export const lastNameFieldAtt = {
   type:'text',
@@ -12,6 +14,8 @@ export const lastNameFieldAtt = {
   geoName:'გვარი',
   placeholder:'მუმლაძე',
   under:'მინიმუმ 2 ასო, ქართული ასოები',
+  pageid:1,
+  index:0
 }
 export const aboutMeFieldAtt = {
   type:'textarea',
@@ -19,7 +23,9 @@ export const aboutMeFieldAtt = {
   geoName:'ჩემს შესახებ (არასავალდებულო)',
   placeholder:'ზოგადი ინფო შენს შესახებ',
   nogreensign:true,
-  className:'filter'
+  className:'filter',
+  pageid:1,
+  index:0
 }
 export const emailFieldAtt = {
   type:'email',
@@ -27,6 +33,8 @@ export const emailFieldAtt = {
   geoName:'ელ-ფოსტა',
   placeholder:'anzorr666@redberry.ge',
   under: 'უნდა მთავრდებოდეს @redberry.ge-ით',
+  pageid:1,
+  index:0
 }
 export const numberFieldAtt = {
   type:'number',
@@ -34,4 +42,6 @@ export const numberFieldAtt = {
   geoName:'მობილურის ნომერი',
   placeholder:'+ 995 551 12 34 56',
   under: 'უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს',
+  pageid:1,
+  index:0
 }

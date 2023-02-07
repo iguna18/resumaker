@@ -1,15 +1,10 @@
-import logo from './logo.svg'
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"
 import Cv from './components/cv'
-import { Strip, Input } from './styles/styles'
+import { Strip } from './styles/styles'
 import {FaChevronCircleLeft} from 'react-icons/fa'
 import General from './components/General'
 import Experiences from './components/Experiences'
 import FormWrapper from './components/FormWrapper'
-import { useEffect } from 'react'
-import { updateField } from './reducers/slices'
-import { useDispatch } from 'react-redux'
-
 const Container = ({ children }) => (
   <div style={{ display: "flex", flexDirection: "row", height:"100vh" }}>
     {children}
@@ -20,9 +15,7 @@ const Container = ({ children }) => (
 const NotFoundPage = () => <div>404: Page Not Found</div>;
 
 const App = () => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-  }, [])
+
     
   return (
     <Router>
@@ -35,7 +28,7 @@ const App = () => {
       <Strip flex={6}>
         <FormWrapper>
           <Routes>
-          <Route path="/1" element={<General/>} />
+          {/* <Route path="/1" element={<General/>} /> */}
           <Route path="/2" element={<Experiences/>} />  
           <Route path="/3" element={<></>} />  
           </Routes>

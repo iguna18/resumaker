@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import styled from "styled-components"
 import { Input } from "../styles/styles"
 import { useDispatch, useSelector } from 'react-redux';
-import { setField } from "../reducers/slices";
+import { setFieldThunk } from "../reducers/slices";
 
 const Validation = styled.div`
   position: absolute;
@@ -17,8 +17,11 @@ const Validation = styled.div`
 `
 const PHONE_REGEX = /^(\+995)(79\d{7}|5\d{8})$/
 
-const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, showErrors}) => {
-  let value = useSelector((state) => state['form'][name]);
+const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, showErrors, index, pageid}) => {
+  // let group = useSelector((state) => state.form[pageid][index]
+  // let value = useSelector((state) => state.form[pageid][index][name])
+  //PIRVEL RIGSHI AMAS MIXEDE ^^
+  let value=null
   value = value? value : ''
   let valueValidity = useSelector((state) => state['form'][`${name}Validity`])
   if(!valueValidity)
@@ -27,37 +30,39 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
   const dispatch = useDispatch();
   
   const onChange = (event) => {
-    dispatch(setField({fieldName:name, fieldValue:event.target.value}))
+    dispatch(setFieldThunk({fieldName:name, fieldValue:event.target.value, index, pageid}))
   }
 
   useEffect(() => {
 
-    dispatch(setField({
-      fieldName:`${name}Validity`,
-      fieldValue: function(){
-        switch (name) {
-          case 'number':
-            return PHONE_REGEX.test(value)
-          case 'firstName':
-          case 'lastName':
-            return value.length >= 2 && /^[\u10A0-\u10FF]+$/.test(value)
-          case 'email':
-            return value.slice(-12) == '@redberry.ge'
-          case 'position':
-          case 'employer':
-            return value.length >= 2
-          case 'workdescription':
-            return value.length > 0
-          case 'aboutMe':
-            return true
-          case 'workstart':
-          case 'workend':
-            return value != ''
-          default:
-          break;
-        }
-      }()
-    }, [value]))
+    // dispatch(setFieldThunk({
+    //   fieldName:`${name}Validity`,
+    //   fieldValue: function(){
+    //     switch (name) {
+    //       case 'number':
+    //         return PHONE_REGEX.test(value)
+    //       case 'firstName':
+    //       case 'lastName':
+    //         return value.length >= 2 && /^[\u10A0-\u10FF]+$/.test(value)
+    //       case 'email':
+    //         return value.slice(-12) == '@redberry.ge'
+    //       case 'position':
+    //       case 'employer':
+    //         return value.length >= 2
+    //       case 'workdescription':
+    //         return value.length > 0
+    //       case 'aboutMe':
+    //         return true
+    //       case 'workstart':
+    //       case 'workend':
+    //         return value != ''
+    //       default:
+    //       break;
+    //     }
+    //   }(),
+    //   index, 
+    //   pageid
+    // }, [value]))
   })
     
   const style = {

@@ -1,14 +1,14 @@
 import React from "react"
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Divider } from "../styles/styles"
-import { setField } from "../reducers/slices";
+import { increaseGroupCounter } from "../reducers/slices";
 import { useDispatch, useSelector } from "react-redux";
 import * as ExperiencesConstants from './ExperiencesConstants'
 import * as GeneralConstants from './GeneralConstants'
 import * as EducationConstants from './EducationConstants'
 
 const onClickingForward = (dispatch, pageid, navigate, state) => (e) => {
-  dispatch(setField({fieldName:`page${pageid}Check`, fieldValue:true}))
+  // dispatch(setField({fieldName:`page${pageid}Check`, fieldValue:true}))
   const consts = [GeneralConstants,ExperiencesConstants,EducationConstants].at(pageid-1)
   for(let key in consts) {
     const c = consts[key]
@@ -38,6 +38,9 @@ export default ({children}) => {
           <Divider/>
         </div>
         <div style={{width:'80%'}}>{children}</div>
+        <button onClick={()=>{
+          dispatch(increaseGroupCounter({pageid}))
+        }}>მეტის დამატება</button>
       </div>
       <div style={{width:'81%', display:'flex', justifyContent:'space-between', paddingBottom:'40px'}}>
           <Link to={`/${pageid-1}`}>
