@@ -28,13 +28,12 @@ const App = () => {
       <Strip flex={6}>
         <FormWrapper>
           <Routes>
-          {/* <Route path="/1" element={<General/>} /> */}
+          <Route path="/1" element={<General/>} />
           <Route path="/2" element={<Experiences/>} />  
           <Route path="/3" element={<></>} />  
           </Routes>
         </FormWrapper>
       </Strip>
-      {/* <Strip/> */}
       <Strip flex={5}>
         <Cv/>
       </Strip>

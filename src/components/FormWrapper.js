@@ -1,22 +1,35 @@
 import React from "react"
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Divider } from "../styles/styles"
-import { increaseGroupCounter } from "../reducers/slices";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"
 import * as ExperiencesConstants from './ExperiencesConstants'
 import * as GeneralConstants from './GeneralConstants'
 import * as EducationConstants from './EducationConstants'
+import { setField } from "../reducers/slices"
+
 
 const onClickingForward = (dispatch, pageid, navigate, state) => (e) => {
-  // dispatch(setField({fieldName:`page${pageid}Check`, fieldValue:true}))
+  //Sets the flag for displaying error (incorrectly filled fields) s to true
+  dispatch(setField({fieldName:`page${pageid}Check`, fieldValue:true}))
+  //Navigates to the next page only if all validity checks are met on current page
   const consts = [GeneralConstants,ExperiencesConstants,EducationConstants].at(pageid-1)
   for(let key in consts) {
     const c = consts[key]
     const fieldName = c.name
-    if(!state[`${fieldName}Validity`])
-      return
+    for(let i=0; i<state[`page${pageid}FormCounter`]; i++) {
+      if(!state[`${fieldName}Validity_${i}`])
+        return
+    }
   }
+
   navigate(`/${pageid + 1}`)
+}
+
+const onClickingMore = (dispatch, pageid, state) => (e) => {
+  //Increases the counter for how many times should the current page's form
+  //be displayed
+  dispatch(setField({fieldName:`page${pageid}FormCounter`, 
+  fieldValue:state[`page${pageid}FormCounter`] + 1}))
 }
 
 export default ({children}) => {
@@ -38,21 +51,25 @@ export default ({children}) => {
           <Divider/>
         </div>
         <div style={{width:'80%'}}>{children}</div>
-        <button onClick={()=>{
-          dispatch(increaseGroupCounter({pageid}))
-        }}>მეტის დამატება</button>
+        {
+          pageid != 1 &&
+          <button onClick={onClickingMore(dispatch, pageid, state)}>მეტის დამატება</button>
+        }
       </div>
       <div style={{width:'81%', display:'flex', justifyContent:'space-between', paddingBottom:'40px'}}>
+        <div>
+        {
+          pageid != 1 &&
           <Link to={`/${pageid-1}`}>
             <button>
               უკან
             </button>
           </Link>
-          {/* <Link to={`/${pageid+1}`}> */}
-            <button onClick={onClickingForward(dispatch, pageid, navigate, state)}>
-              შემდეგი
-            </button>
-          {/* </Link> */}
+        }
+        </div>
+        <button onClick={onClickingForward(dispatch, pageid, navigate, state)}>
+          შემდეგი
+        </button>
       </div>
     </div>
   )

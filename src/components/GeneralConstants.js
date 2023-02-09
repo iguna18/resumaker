@@ -1,7 +1,7 @@
 export const nameFieldAtt = {
   type:'text',
   name:'firstName', 
-  geoName:'სახელი',
+  geoName:'George სახელი',
   under:'მინიმუმ 2 ასო, ქართული ასოები',
   placeholder:'ანზორ',
   isSmall:true,

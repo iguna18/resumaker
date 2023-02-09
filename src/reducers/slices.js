@@ -1,48 +1,25 @@
 
 import { createSlice } from '@reduxjs/toolkit'
 
+const initialState = {
+  page1FormCounter: 1,
+  page2FormCounter: 1,
+  page3FormCounter: 1
+}
+
 const formSlice = createSlice({
   name: 'form',
-  initialState: {
-    1:[],
-    2:[],
-    3:[],
-    other:{
-      page2groupCounter:1,
-      page3groupCounter:1      
-    }
-  },
+  initialState: initialState,
   reducers: {
     setField: (state, action) => {
-      const { fieldName, fieldValue, pageid, index } = action.payload
-      state[pageid][index][fieldName] = fieldValue
+      const { fieldName, fieldValue } = action.payload
+      state[fieldName] = fieldValue
     },
-    setOtherField: (state, action) => {
-      const { fieldName, fieldValue} = action.payload;
-      state['other'][fieldName] = fieldValue
-    },
-    addGroup: (state, action) => {
-      const { pageid, index } = action.payload;
-      if(!state[pageid][index]) {
-        state[pageid][index] = {}
-      }
-    },
-    increaseGroupCounter: (state, action) => {
-      const { pageid } = action.payload;
-      state.other[`page${pageid}groupCounter`] += 1
+    refresh: (state, action) => {
+      return initialState
     }
-  },
-});
+  }
+})
 
-export const { setField, addGroup, setOtherField, increaseGroupCounter } = formSlice.actions;
-export default formSlice.reducer;
-
-export const addGroupThunk = (pageid, index) => async (dispatch, getState) => {
-  dispatch(addGroup({pageid, index}))
-}
-
-export const setFieldThunk = (payload) => async (dispatch, getState) => {
-  console.log(getState());
-  dispatch(setField(payload))
-  console.log(getState());
-}
+export const { setField } = formSlice.actions
+export default formSlice.reducer

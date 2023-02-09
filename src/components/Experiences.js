@@ -2,15 +2,11 @@ import React, { useEffect } from "react"
 import Field from "./Field"
 import * as consts from './ExperiencesConstants'
 import { useSelector, useDispatch } from "react-redux"
-import { addGroupThunk } from "../reducers/slices"
 
 export default () => {
-  const showErrors = useSelector(state=>state.form.other['page2Check'])
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(addGroupThunk(2, 0))
-  },[])
-  const groupCounter = useSelector(state=>state.form.other['page2groupCounter'])
+  const showErrors = useSelector(state=>state.form['page2Check'])
+
+  const groupCounter = useSelector(state=>state.form['page2FormCounter'])
   const arr = Array.from({length: groupCounter})
   return (
     arr.map((_, i) => {
