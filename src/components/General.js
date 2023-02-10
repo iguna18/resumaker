@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
 import Field from "./Field";
 import * as consts from './GeneralConstants'
-
 export default () => {
-  const showErrors = useSelector(state=>state.form['page1Check'])
+  const showErrors = useSelector(state=>state.form[`page1Group${0}Check`])
 
   return (
     <>
@@ -19,6 +18,7 @@ export default () => {
           </div>
         </div>
 
+        <Field {...consts.photoAtt} showErrors={showErrors}/>
         <Field {...consts.aboutMeFieldAtt} showErrors={showErrors}/>
         <Field {...consts.emailFieldAtt} showErrors={showErrors}/>
         <Field {...consts.numberFieldAtt} showErrors={showErrors}/>

@@ -5,9 +5,10 @@
   font-style: normal;
 }
 
+
 body {
   margin: 0;
-  /* font-family: 'HelveticaNeue' sans-serif; */
+  /* font-family: 'Helvetica Neue'; */
   /* font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 
   -webkit-font-smoothing: antialiased;
@@ -15,10 +16,25 @@ body {
 } 
 
 #root {
-  font-family:'HelveticaNeue'
+  font-family:'Helvetica Neue'
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* input[type="file"] {
+  display: inline-block;
+  padding: 0.5em 1em;
+  border: 1px solid gray;
+  border-radius: 4px;
+  background-color: white;
+} */
+
+input[type="file"]::-webkit-file-upload-button {
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 4px;
 }

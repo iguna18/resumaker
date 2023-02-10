@@ -1,7 +1,7 @@
 export const nameFieldAtt = {
   type:'text',
   name:'firstName', 
-  geoName:'George სახელი',
+  geoName:'სახელი',
   under:'მინიმუმ 2 ასო, ქართული ასოები',
   placeholder:'ანზორ',
   isSmall:true,
@@ -16,6 +16,17 @@ export const lastNameFieldAtt = {
   under:'მინიმუმ 2 ასო, ქართული ასოები',
   pageid:1,
   index:0
+}
+export const photoAtt = {
+  type:'file',
+  name:'photo', 
+  geoName:'პირადი ფოტოს ატვირთვა',
+  pageid:1,
+  index:0,
+  otherAtt:{
+    accept:"image/png, image/jpeg"
+
+  }
 }
 export const aboutMeFieldAtt = {
   type:'textarea',

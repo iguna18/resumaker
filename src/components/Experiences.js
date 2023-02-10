@@ -2,14 +2,20 @@ import React, { useEffect } from "react"
 import Field from "./Field"
 import * as consts from './ExperiencesConstants'
 import { useSelector, useDispatch } from "react-redux"
+import { Divider } from "../styles/styles";
+
+const getShowErrorsFlag = (index, state) => {
+  return state[`page2Group${index}Check`]
+}
 
 export default () => {
-  const showErrors = useSelector(state=>state.form['page2Check'])
+  const state = useSelector(state=>state.form)
 
   const groupCounter = useSelector(state=>state.form['page2FormCounter'])
   const arr = Array.from({length: groupCounter})
   return (
     arr.map((_, i) => {
+      const showErrors = getShowErrorsFlag(i, state)
       return (
         <div style={{flexDirection:''}} key={i}>
           <Field {...consts.positionAtt} showErrors={showErrors} index={i}/>
@@ -23,6 +29,7 @@ export default () => {
               </div>
             </div>
           <Field {...consts.workdescriptionAtt} showErrors={showErrors} index ={i}/>
+          <Divider thin/>
         </div>
       )
     })

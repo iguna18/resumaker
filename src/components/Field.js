@@ -1,20 +1,9 @@
 import { useEffect } from "react";
-import styled from "styled-components"
-import { Input } from "../styles/styles"
+import { Input, UploadLabel, Validation } from "../styles/styles"
 import { useDispatch, useSelector } from 'react-redux'
 import { setField } from "../reducers/slices";
 
-const Validation = styled.div`
-  position: absolute;
-  color: ${props => props.err ? 'red' : 'green'};
-  left: 100%;
-  top: 50%;
 
-  transform: translate(
-    ${props => props.err ? '10px' : '-10px'},
-    -50%
-  );
-`
 const PHONE_REGEX = /^(\+995)(79\d{7}|5\d{8})$/
 
 const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, showErrors, index}) => {
@@ -28,8 +17,26 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
   const dispatch = useDispatch();
   
   const onChange = (event) => {
-    dispatch(setField({fieldName:`${name}_${index}`, fieldValue:event.target.value}))
+    dispatch(setField(
+      {
+        fieldName:`${name}_${index}`, 
+        fieldValue:
+          (
+            name != 'photo' ?
+            event.target.value :
+            URL.createObjectURL(event.target.files[0])
+          )
+      }))
   }
+
+  useEffect(() => {
+    return () => {
+      if (name =='photo' && value) {
+        URL.revokeObjectURL(value);
+      }
+    };
+  }, [value]);
+
 
   useEffect(() => {
 
@@ -54,6 +61,8 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
           case 'workstart':
           case 'workend':
             return value != ''
+          case 'photo':
+            return value != ''
           default:
           break;
         }
@@ -62,9 +71,23 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
   })
     
   const style = {
-    width: isSmall?'85%':'100%'
+    width: name == 'photo'?'fit-content':(isSmall?'85%':'100%'),
+    marginBottom: 20,
+    display: name == 'photo'?'flex':'',
+    alignItems: name == 'photo'?'center':''
   }
   
+  const textareaStyle = {
+    width:'98.5%', 
+    height:50, 
+    fontFamily:'HelveticaNeue', 
+    resize: 'none', 
+    overflow: 'auto',
+    fontSize:13,
+    boxSizing: 'border-box',
+    padding: 5
+  }
+
   // To avoid error from destructuring undefined (other attributes for input
   // may or may not be passed)
   otherAtt = otherAtt ? otherAtt : {}
@@ -87,10 +110,14 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
     otherAtt.max = endDay
   }
 
+  //We dont want upload input element to have value attribute
+  // if(name != 'photo')
+    otherAtt.value = name != 'photo' ? value :''
+
   return (
     <div style={style}>
-      <label htmlFor={name}>{geoName}</label>
-      <div style={{position:'relative'}}>
+      <label htmlFor={name} style={{fontWeight:500, fontSize:14}}>{geoName}</label>
+      <div style={{position:'relative', marginTop:4}}>
         {
           ['text','email','number'].some(t=>t==type) && 
           valueValidity &&
@@ -106,13 +133,19 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
           type == 'textarea' ?
           <textarea name={name} placeholder={placeholder}
             onChange={onChange} value={value} {...otherAtt}
-            style={{width:'100%', resize: 'none', overflow: 'auto'}}></textarea>
+            style={textareaStyle}></textarea>
           :
-          <Input type={type} name={name} placeholder={placeholder}
-            onChange={onChange} value={value} {...otherAtt} />
+          <Input type={type} name={name} id= {name} placeholder={placeholder}
+            onChange={onChange} {...otherAtt} />
+        }
+        {
+          name == 'photo' &&
+          // <label htmlFor={name}>ატვირთვა</label>
+          <UploadLabel htmlFor={name}>ატვირთვა</UploadLabel>
         }
       </div>
-      {under && <label htmlFor="name" style={{fontSize:'0.5em'}}>{under}</label>}
+      {under && <label htmlFor={name} style={{fontSize:11, fontWeight:300}}>
+        {under}</label>}
     </div>
   )
 }

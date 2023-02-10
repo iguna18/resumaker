@@ -7,22 +7,50 @@ import * as GeneralConstants from './GeneralConstants'
 import * as EducationConstants from './EducationConstants'
 import { setField } from "../reducers/slices"
 
-
+/**
+ * Set flags for displaying errors for each field group and navigate to next page if 
+ * there are no errors
+ */
 const onClickingForward = (dispatch, pageid, navigate, state) => (e) => {
   //Sets the flag for displaying error (incorrectly filled fields) s to true
-  dispatch(setField({fieldName:`page${pageid}Check`, fieldValue:true}))
   //Navigates to the next page only if all validity checks are met on current page
   const consts = [GeneralConstants,ExperiencesConstants,EducationConstants].at(pageid-1)
-  for(let key in consts) {
-    const c = consts[key]
-    const fieldName = c.name
-    for(let i=0; i<state[`page${pageid}FormCounter`]; i++) {
-      if(!state[`${fieldName}Validity_${i}`])
-        return
+  const fieldsArray = Object.values(consts);
+  const numberOfGroups = state[`page${pageid}FormCounter`]
+  let erroredGroupCounter = 0
+  for(let i=0; i<numberOfGroups; i++) {  //for each group of fields
+    let atLeastOneFieldFilled = false
+    //First group on page must be checked(treated as if it was partially filled)
+    if(i == 0) {
+      atLeastOneFieldFilled = true
+    } else { //check if the group is touched
+      for(const field of fieldsArray) {
+        const fieldName = field.name
+        if(state[`${fieldName}_${i}`]) {
+          atLeastOneFieldFilled = true
+          continue
+        }
+      }
+    }
+
+    if(!atLeastOneFieldFilled) {
+      dispatch(setField({fieldName:`page${pageid}Group${i}Check`, fieldValue:false}))
+      continue
+    }
+
+    //Mark this group if it has errors
+    for(const field of fieldsArray) {
+      const fieldName = field.name
+      if(!state[`${fieldName}Validity_${i}`]) {
+        dispatch(setField({fieldName:`page${pageid}Group${i}Check`, fieldValue:true}))
+        erroredGroupCounter++
+        continue
+      }
     }
   }
-
-  navigate(`/${pageid + 1}`)
+  console.log(erroredGroupCounter);
+  if(erroredGroupCounter == 0)
+    navigate(`/${pageid + 1}`)
 }
 
 const onClickingMore = (dispatch, pageid, state) => (e) => {
@@ -45,7 +73,7 @@ export default ({children}) => {
       <div>
         <div style={{width:'81%'}}>
           <div style={{display:'flex', justifyContent:'space-between', marginTop:'15px',width:''}}>
-              <div>{['','პირადი ინფო', 'გამოცდილება', 'განათლება'].at(pageid)}</div>
+              <div style={{fontSize:18,  fontWeight:530}}>{['','ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ', 'ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ', 'ᲒᲐᲜᲐᲗᲚᲔᲑᲐ'].at(pageid)}</div>
               <div>{pageid}/3</div>
           </div>
           <Divider/>
