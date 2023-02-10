@@ -15,7 +15,6 @@ const Container = ({ children }) => (
 const NotFoundPage = () => <div>404: Page Not Found</div>;
 
 const App = () => {
-
     
   return (
     <Router>

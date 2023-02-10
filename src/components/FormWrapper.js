@@ -72,7 +72,7 @@ export default ({children}) => {
     <div style={{display:'flex', flexDirection:'column', height:'100%', justifyContent:'space-between'}}>
       <div>
         <div style={{width:'81%'}}>
-          <div style={{display:'flex', justifyContent:'space-between', marginTop:'15px',width:''}}>
+          <div style={{display:'flex', justifyContent:'space-between', marginTop:'30px',width:''}}>
               <div style={{fontSize:18,  fontWeight:530}}>{['','ᲞᲘᲠᲐᲓᲘ ᲘᲜᲤᲝ', 'ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ', 'ᲒᲐᲜᲐᲗᲚᲔᲑᲐ'].at(pageid)}</div>
               <div>{pageid}/3</div>
           </div>

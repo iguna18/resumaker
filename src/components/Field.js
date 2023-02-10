@@ -140,7 +140,6 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
         }
         {
           name == 'photo' &&
-          // <label htmlFor={name}>ატვირთვა</label>
           <UploadLabel htmlFor={name}>ატვირთვა</UploadLabel>
         }
       </div>
