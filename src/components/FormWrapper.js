@@ -1,6 +1,6 @@
 import React from "react"
 import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { Divider } from "../styles/styles"
+import { Divider, Button } from "../styles/styles"
 import { useDispatch, useSelector } from "react-redux"
 import * as ExperiencesConstants from './ExperiencesConstants'
 import * as GeneralConstants from './GeneralConstants'
@@ -81,23 +81,25 @@ export default ({children}) => {
         <div style={{width:'80%'}}>{children}</div>
         {
           pageid != 1 &&
-          <button onClick={onClickingMore(dispatch, pageid, state)}>მეტის დამატება</button>
+          <Button onClick={onClickingMore(dispatch, pageid, state )}>
+            {['','','მეტი გამოცდილების დამატება','სხვა სასწავლებლის დამატება'].at(pageid)}
+          </Button>
         }
       </div>
-      <div style={{width:'81%', display:'flex', justifyContent:'space-between', paddingBottom:'40px'}}>
+      <div style={{width:'81%', display:'flex', justifyContent:'space-between', marginTop:'60px', paddingBottom:'40px'}}>
         <div>
         {
           pageid != 1 &&
           <Link to={`/${pageid-1}`}>
-            <button>
-              უკან
-            </button>
+            <Button violet>
+              ᲣᲙᲐᲜ
+            </Button>
           </Link>
         }
         </div>
-        <button onClick={onClickingForward(dispatch, pageid, navigate, state)}>
-          შემდეგი
-        </button>
+        <Button violet longer onClick={onClickingForward(dispatch, pageid, navigate, state)}>
+          {pageid==3 ?'ᲓᲐᲡᲠᲣᲚᲔᲑᲐ':'ᲨᲔᲛᲓᲔᲒᲘ'}
+        </Button>
       </div>
     </div>
   )

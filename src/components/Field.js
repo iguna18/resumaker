@@ -53,16 +53,21 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
             return value.slice(-12) == '@redberry.ge'
           case 'position':
           case 'employer':
+          case 'school':
             return value.length >= 2
           case 'workdescription':
+          case 'schooldescription':
             return value.length > 0
           case 'aboutMe':
             return true
           case 'workstart':
           case 'workend':
+          case 'schoolend':
             return value != ''
           case 'photo':
             return value != ''
+          case 'degree':
+            return false 
           default:
           break;
         }
@@ -111,8 +116,7 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
   }
 
   //We dont want upload input element to have value attribute
-  // if(name != 'photo')
-    otherAtt.value = name != 'photo' ? value :''
+  otherAtt.value = name != 'photo' ? value :''
 
   return (
     <div style={style}>
