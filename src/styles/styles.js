@@ -7,7 +7,8 @@ const colors = {
   ButtonHoverBlue: '#122680',
   SlightGray: '#f6f6f6',
   AshyBlue: '#62A1EB',
-  Violet: '#6B40E3'
+  Violet: '#6B40E3',
+  InputGray: '#BCBCBC'
 }
 export default colors
 
@@ -24,6 +25,14 @@ export const Input = styled.input`
   font-family: "HelveticaNeue";
   font-size: "16px";
   margin-bottom: 2px;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid;
+  border-color: ${props => props.valueValidity?'lightgreen':colors.InputGray};
+  &:focus {
+    border-color:${colors.InputGray};
+    border-width: 2px;
+  }
   ${props => props.name === 'photo' && 
     `display: none;`
   }
@@ -36,7 +45,32 @@ export const Input = styled.input`
   ${props => props.name === "photo" && `
     margin-left:4px
   `};
+  ${props => props.showErrors && !props.valueValidity && `
+    border-color:red;
+  ` }
 `
+export const Textarea = styled.textarea`
+  width: 98.5%;
+  height: 50px; 
+  font-family:'HelveticaNeue';
+  resize: none;
+  overflow: auto;
+  font-size: 13px;
+  box-sizing: border-box;
+  padding: 5px;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid;
+  border-color: ${props => props.valueValidity?'lightgreen':colors.InputGray};
+  &:focus {
+    border-color:${colors.InputGray};
+    border-width: 2px;
+  }
+  ${props => props.showErrors && !props.valueValidity && `
+    border-color:red;
+  ` }
+`
+
 export const Divider = styled.hr`
   margin-bottom:50px;
   margin-top:5px;
@@ -126,5 +160,16 @@ export const Button = styled.button`
   `}
   ${props => props.longer && `
     width: 120px;
+  `}
+`
+export const FieldLabel = styled.label`
+  font-weight:500;
+  font-size:13px;
+  ${props => props.small && `
+    font-size:11px;
+    font-weight:300;
+  `}
+  ${props => !props.small && props.showErrors && !props.valueValidity && `
+    color:red
   `}
 `

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom"
 import Cv from './components/cv'
 import { Strip } from './styles/styles'
 import {FaChevronCircleLeft} from 'react-icons/fa'
@@ -6,7 +6,6 @@ import General from './components/General'
 import Experiences from './components/Experiences'
 import FormWrapper from './components/FormWrapper'
 import Education from "./components/Education"
-import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react"
 
 const Container = ({ children }) => (
@@ -33,7 +32,14 @@ const Layout = ({ children }) => (
   </>
 )
 
-const NotFoundPage = () => <div>404: Page Not Found</div>;
+function NoMatch() {
+  const navigate = useNavigate()
+  useEffect(()=>{
+    navigate('/0')
+    
+  })
+  return null
+}
 
 const App = () => {
 
@@ -41,11 +47,12 @@ const App = () => {
     <Router>
     <Container>
           <Routes>
-          <Route path="/0" element={<h1>ZDAROVA</h1>} />
+          <Route exact path="/0" element={<h1>ZDAROVA</h1>} />
           <Route path="/1" element={<Layout><General/></Layout>} />
           <Route path="/2" element={<Layout><Experiences/></Layout>} />  
           <Route path="/3" element={<Layout><Education/></Layout>} />
           <Route path="/4" element={<Cv/>} />
+          <Route path='*' element={<NoMatch/>}/>
           </Routes>
     </Container>
     </Router>

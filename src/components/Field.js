@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { Input, UploadLabel, Validation } from "../styles/styles"
+import { Input, UploadLabel, Validation, Textarea, FieldLabel } from "../styles/styles"
 import { useDispatch, useSelector } from 'react-redux'
 import { setField } from "../reducers/slices";
-
 
 const PHONE_REGEX = /^(\+995)(79\d{7}|5\d{8})$/
 
@@ -82,17 +81,6 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
     alignItems: name == 'photo'?'center':''
   }
   
-  const textareaStyle = {
-    width:'98.5%', 
-    height:50, 
-    fontFamily:'HelveticaNeue', 
-    resize: 'none', 
-    overflow: 'auto',
-    fontSize:13,
-    boxSizing: 'border-box',
-    padding: 5
-  }
-
   // To avoid error from destructuring undefined (other attributes for input
   // may or may not be passed)
   otherAtt = otherAtt ? otherAtt : {}
@@ -117,10 +105,12 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
 
   //We dont want upload input element to have value attribute
   otherAtt.value = name != 'photo' ? value :''
-
+  otherAtt.valueValidity=valueValidity
+  otherAtt.showErrors=showErrors
   return (
     <div style={style}>
-      <label htmlFor={name} style={{fontWeight:500, fontSize:14}}>{geoName}</label>
+      <FieldLabel htmlFor={name} showErrors={showErrors} valueValidity={valueValidity}>
+        {geoName}</FieldLabel>
       <div style={{position:'relative', marginTop:4}}>
         {
           ['text','email','number'].some(t=>t==type) && 
@@ -135,20 +125,19 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
         }
         {
           type == 'textarea' ?
-          <textarea name={name} placeholder={placeholder}
-            onChange={onChange} value={value} {...otherAtt}
-            style={textareaStyle}></textarea>
+          <Textarea name={name} placeholder={placeholder}
+            onChange={onChange} value={value} {...otherAtt}/>
           :
           <Input type={type} name={name} id= {name} placeholder={placeholder}
-            onChange={onChange} {...otherAtt} />
+            onChange={onChange} {...otherAtt}/>
         }
         {
           name == 'photo' &&
           <UploadLabel htmlFor={name}>ატვირთვა</UploadLabel>
         }
       </div>
-      {under && <label htmlFor={name} style={{fontSize:11, fontWeight:300}}>
-        {under}</label>}
+      {under && <FieldLabel small htmlFor={name}>
+        {under}</FieldLabel>}
     </div>
   )
 }
