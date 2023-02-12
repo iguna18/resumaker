@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'https://resume.redberryinternship.ge/api/'
+const baseUrl = 'https://resume.redberryinternship.ge/api'
 
 const getDegrees = async () => {
   return (
@@ -10,6 +10,7 @@ const getDegrees = async () => {
 }
 
 const uploadResume = async (resume) => {
+  console.log(resume);
   return (
     axios
       .post(`${baseUrl}/cvs`, resume)
@@ -17,4 +18,4 @@ const uploadResume = async (resume) => {
   )
 }
 
-export default {getDegrees, uploadResume}
+export default { getDegrees, uploadResume }

@@ -12,7 +12,7 @@ const ExperienceSection = ({state}) => {
         const place = 
           (state[`position_${i}`]?state[`position_${i}`]:'') 
           + (state[`employer_${i}`]? (', '+state[`employer_${i}`]) :'')
-        console.log(state[`employer_${i}`]);
+        
         return (
           <div key = {i}>
             <p style={{fontWeight:500}}>

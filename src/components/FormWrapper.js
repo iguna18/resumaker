@@ -6,6 +6,42 @@ import * as ExperiencesConstants from './ExperiencesConstants'
 import * as GeneralConstants from './GeneralConstants'
 import * as EducationConstants from './EducationConstants'
 import { setField } from "../reducers/slices"
+import services from '../services/services'
+
+const handleFinish = (state, navigate) => {
+  let resume = {
+    name: state['firstName_0'],
+    surname: state['lastName_0'],
+    email: state['email_0'],
+    phone_number: state['number_0'],
+    experiences: [],
+    educations: [],
+    image: state['photo_0'],
+    about_me: state['aboutMe_0'] ? state['aboutMe_0'] : null
+  }
+  // for (let i = 0; i < state['page2FormCounter']; i++) {
+  //   resume.experiences.push({
+  //     position:state[`position_${i}`],
+  //     employer:state[`employer_${i}`],
+  //     start_date:state[`workstart_${i}`],
+  //     due_date:state[`workend_${i}`],
+  //     description:state[`workdescription_${i}`]
+  //   })
+  // }
+  // for (let i = 0; i < state['page3FormCounter']; i++) {
+  //   resume.educations.push({
+  //     institute:state[`school_${i}`],
+  //     degree:state[`degree_${i}`],
+  //     due_date:state[`schoolend_${i}`],
+  //     description:state[`schooldescription_${i}`]
+  //   })
+  // }
+  services.uploadResume(resume)
+    .then(returnedData => {
+      console.log(returnedData);
+      navigate(`/${4}`)
+    }).catch(err => console.log(err))
+}
 
 /**
  * Set flags for displaying errors for each field group and navigate to next page if 
@@ -48,9 +84,12 @@ const onClickingForward = (dispatch, pageid, navigate, state) => (e) => {
       }
     }
   }
-  console.log(erroredGroupCounter);
-  if(erroredGroupCounter == 0)
-    navigate(`/${pageid + 1}`)
+  if(erroredGroupCounter == 0) {
+    if(pageid == 3)
+      handleFinish(state)
+    else
+      navigate(`/${pageid + 1}`)
+  }
 }
 
 const onClickingMore = (dispatch, pageid, state) => (e) => {

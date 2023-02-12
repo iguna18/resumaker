@@ -23,7 +23,7 @@ export const Input = styled.input`
   padding: 5px;
   width: 100%; 
   font-family: "HelveticaNeue";
-  font-size: "16px";
+  font-size: 13px;
   margin-bottom: 2px;
   outline: none;
   border-radius: 3px;
@@ -135,9 +135,6 @@ export const CvDiv = styled.div`
   height:'100%';
   padding: "1em 60px"
 `
-export const BigButton = styled.button`
-  /* background-color: ; */
-`
 export const Button = styled.button`
   background-color: ${colors.AshyBlue};
   border-width:0;
@@ -172,4 +169,28 @@ export const FieldLabel = styled.label`
   ${props => !props.small && props.showErrors && !props.valueValidity && `
     color:red
   `}
+`
+export const Select = styled.select`
+  box-sizing: border-box; 
+  padding: 5px;
+  width: 100%; 
+  font-family: "HelveticaNeue";
+  font-size: 12px;
+  margin-bottom: 2px;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid;
+  background-color: white;
+  color: ${props => props.value && props.value != 'default' ? 'black' : '#808080'};
+  border-color: ${props => props.valueValidity?'lightgreen':colors.InputGray};
+  &:focus {
+    border-color:${colors.InputGray};
+    border-width: 2px;
+  }
+  ${props => props.showErrors && !props.valueValidity && `
+    border-color:red;
+  ` }
+`
+export const Option = styled.option`
+  font-family:'Helvetica Neue'
 `

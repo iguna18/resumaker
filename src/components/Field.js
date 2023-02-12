@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Input, UploadLabel, Validation, Textarea, FieldLabel } from "../styles/styles"
+import { Input, UploadLabel, Validation, Textarea, FieldLabel, Select, Option } from "../styles/styles"
 import { useDispatch, useSelector } from 'react-redux'
 import { setField } from "../reducers/slices";
 
@@ -66,7 +66,7 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
           case 'photo':
             return value != ''
           case 'degree':
-            return false 
+            return value && value !='default'
           default:
           break;
         }
@@ -121,15 +121,28 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
           showErrors &&
           name != 'aboutMe' &&
           !valueValidity &&
-         <Validation err>&#10007;</Validation>
+          <Validation err>&#10007;</Validation>
         }
         {
           type == 'textarea' ?
-          <Textarea name={name} placeholder={placeholder}
+          <Textarea name={name} placeholder={placeholder} id={name}
             onChange={onChange} value={value} {...otherAtt}/>
-          :
-          <Input type={type} name={name} id= {name} placeholder={placeholder}
-            onChange={onChange} {...otherAtt}/>
+          : ( 
+            name == 'degree' ? 
+            <Select value={value} onChange={onChange} name={name} id={name}
+              valueValidity={valueValidity} showErrors={showErrors}>
+              <Option value="default">აირჩიეთ ხარისხი</Option>
+              {
+                otherAtt.degrees.map(d=>(
+                  <Option style={{fontFamily:'Helvetica Neue'}} key={d.id} value={d.title}>
+                    {d.title}</Option>
+                ))
+              }
+            </Select>
+            : 
+            <Input type={type} name={name} id= {name} placeholder={placeholder}
+              onChange={onChange} {...otherAtt}/>
+          )
         }
         {
           name == 'photo' &&

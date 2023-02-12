@@ -7,7 +7,7 @@ export const schoolAtt = {
   pageid:3
 }
 export const degreeAtt = {
-  type:'text',
+  type:'dropdown',
   name:'degree',
   geoName:'ხარისხი',
   pageid:3,
