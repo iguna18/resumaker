@@ -10,10 +10,7 @@ export const LastPage = ({ children, degrees }) => {
   const [popup, setpopup] = useState(true)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const handleClick = () => {
-    dispatch(refresh({}))
-    navigate('/')
-  }
+
   useEffect(()=>{
     setpopup(true)
   },[])

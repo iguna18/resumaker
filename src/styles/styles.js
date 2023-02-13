@@ -269,8 +269,16 @@ overflow-y: hidden;
   height:100%;
   min-width: 300px;
   width: 45%;
-  /* border-width: 2px;
-  border-color: blue; */
   border: 1.5px solid gray;
 }
+`
+export const WelcomeDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-image: url('/assets/wallpaper.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  padding: 20px 60px;
 `
