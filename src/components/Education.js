@@ -9,13 +9,13 @@ const getShowErrorsFlag = (index, state) => {
   return state[`page3Group${index}Check`]
 }
 
-export default () => {
-  const [degrees, setDegrees] = useState([])
+export default ({degrees,setDegrees}) => {
   useEffect(()=>{
     services
       .getDegrees()
       .then(degrees => {
         setDegrees(degrees)
+        localStorage.setItem("degrees", JSON.stringify(degrees));
       })
       .catch(err => {
         console.log(err)

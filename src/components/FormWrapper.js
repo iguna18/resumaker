@@ -7,7 +7,6 @@ import * as GeneralConstants from './GeneralConstants'
 import * as EducationConstants from './EducationConstants'
 import { setField } from "../reducers/slices"
 import services from '../services/services'
-
 const handleFinish = (state, navigate) => {
   let resume = {
     name: state['firstName_0'],
@@ -16,32 +15,48 @@ const handleFinish = (state, navigate) => {
     phone_number: state['number_0'],
     experiences: [],
     educations: [],
-    image: state['photo_0'],
+    image: state['photo_0'].split(',')[1],
     about_me: state['aboutMe_0'] ? state['aboutMe_0'] : null
   }
-  // for (let i = 0; i < state['page2FormCounter']; i++) {
-  //   resume.experiences.push({
-  //     position:state[`position_${i}`],
-  //     employer:state[`employer_${i}`],
-  //     start_date:state[`workstart_${i}`],
-  //     due_date:state[`workend_${i}`],
-  //     description:state[`workdescription_${i}`]
-  //   })
-  // }
-  // for (let i = 0; i < state['page3FormCounter']; i++) {
-  //   resume.educations.push({
-  //     institute:state[`school_${i}`],
-  //     degree:state[`degree_${i}`],
-  //     due_date:state[`schoolend_${i}`],
-  //     description:state[`schooldescription_${i}`]
-  //   })
-  // }
+  // const fd = new FormData();
+  // fd.append('name', state['firstName_0'])
+  // fd.append('surname', state['lastName_0'])
+  // fd.append('email', state['email_0'])
+  // fd.append('phone_number', state['number_0'])
+  // fd.append('image', state['photo_0'], 'image.png')
+  // fd.append('about_me', state['aboutMe_0'] ? state['aboutMe_0'] : null)
+  
+  // const exp = []
+  for (let i = 0; i < state['page2FormCounter']; i++) {
+    resume.experiences.push({
+      position:state[`position_${i}`],
+      employer:state[`employer_${i}`],
+      start_date:(state[`workstart_${i}`] || '').replaceAll('-','/'),
+      due_date:(state[`workend_${i}`] || '').replaceAll('-','/'),
+      description:state[`workdescription_${i}`]
+    })
+  }
+  // fd.append('experiences', JSON.stringify(exp))
+  // const edu = []
+  for (let i = 0; i < state['page3FormCounter']; i++) {
+    resume.educations.push({
+      institute:state[`school_${i}`],
+      degree_id:parseInt((state[`degree_${i}`] || '1')),
+      due_date:(state[`schoolend_${i}`] || '').replaceAll('-','/'),
+      description:state[`schooldescription_${i}`]
+    })
+  }
+  // fd.append('educations', JSON.stringify(edu))
   services.uploadResume(resume)
     .then(returnedData => {
       console.log(returnedData);
+    }).catch(err => {
       navigate(`/${4}`)
-    }).catch(err => console.log(err))
+      console.log(err.response.data)
+      console.log(err)
+    })
 }
+
 
 /**
  * Set flags for displaying errors for each field group and navigate to next page if 
@@ -70,7 +85,7 @@ const onClickingForward = (dispatch, pageid, navigate, state) => (e) => {
     }
 
     if(!atLeastOneFieldFilled) {
-      dispatch(setField({fieldName:`page${pageid}Group${i}Check`, fieldValue:false}))
+      dispatch(setField({fieldName:`page${pageid}Group${i}Check`, fieldValue:false, localStorageFlag:true}))
       continue
     }
 
@@ -78,17 +93,16 @@ const onClickingForward = (dispatch, pageid, navigate, state) => (e) => {
     for(const field of fieldsArray) {
       const fieldName = field.name
       if(!state[`${fieldName}Validity_${i}`]) {
-        dispatch(setField({fieldName:`page${pageid}Group${i}Check`, fieldValue:true}))
+        dispatch(setField({fieldName:`page${pageid}Group${i}Check`, fieldValue:true, localStorageFlag:true}))
         erroredGroupCounter++
         continue
       }
     }
   }
   if(erroredGroupCounter == 0) {
-    if(pageid == 3)
-      handleFinish(state)
-    else
-      navigate(`/${pageid + 1}`)
+    navigate(`/${pageid + 1}`)
+    if(pageid == 3) 
+      handleFinish(state, navigate)
   }
 }
 
@@ -96,7 +110,7 @@ const onClickingMore = (dispatch, pageid, state) => (e) => {
   //Increases the counter for how many times should the current page's form
   //be displayed
   dispatch(setField({fieldName:`page${pageid}FormCounter`, 
-  fieldValue:state[`page${pageid}FormCounter`] + 1}))
+  fieldValue:state[`page${pageid}FormCounter`] + 1, localStorageFlag:true}))
 }
 
 export default ({children}) => {

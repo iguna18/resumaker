@@ -13,8 +13,15 @@ const uploadResume = async (resume) => {
   console.log(resume);
   return (
     axios
-      .post(`${baseUrl}/cvs`, resume)
-      .then(response => response.data)
+      .post(`${baseUrl}/cvs`, resume, {
+        'Content-Type': 'application/json', 
+        'Accept': 'application/json'
+      })
+      .then(response => {
+        console.log(response);
+        console.log(response.data);
+        return response.data
+      })
   )
 }
 

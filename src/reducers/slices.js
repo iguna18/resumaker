@@ -12,14 +12,22 @@ const formSlice = createSlice({
   initialState: initialState,
   reducers: {
     setField: (state, action) => {
-      const { fieldName, fieldValue } = action.payload
+      const { fieldName, fieldValue, localStorageFlag } = action.payload
       state[fieldName] = fieldValue
+      if(localStorageFlag)
+        localStorage.setItem(`resumaker_${fieldName}`, fieldValue)
     },
     refresh: (state, action) => {
+      for(let i=0; i<localStorage.length; i++){
+        const key = localStorage.key(i)
+        if(!key.startsWith('resumaker_')) continue
+
+        localStorage.removeItem(key)
+      }  
       return initialState
     }
   }
 })
 
-export const { setField } = formSlice.actions
+export const { setField, refresh } = formSlice.actions
 export default formSlice.reducer

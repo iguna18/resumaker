@@ -150,6 +150,7 @@ export const Button = styled.button`
   text-align: center;
   &:hover {
     background-color: ${colors.ButtonHoverBlue};
+    cursor: pointer;
   }
   ${props => props.violet && `
     background-color: ${colors.Violet};
@@ -181,7 +182,7 @@ export const Select = styled.select`
   border-radius: 3px;
   border: 1px solid;
   background-color: white;
-  color: ${props => props.value && props.value != 'default' ? 'black' : '#808080'};
+  color: ${props => props.value && props.value != 0 ? 'black' : '#808080'};
   border-color: ${props => props.valueValidity?'lightgreen':colors.InputGray};
   &:focus {
     border-color:${colors.InputGray};
@@ -193,4 +194,83 @@ export const Select = styled.select`
 `
 export const Option = styled.option`
   font-family:'Helvetica Neue'
+`
+export const HomeButton = styled.div`
+  background-color: white;
+  height: 27px;
+  width: 27px;
+  margin-top: 30px;
+  border-radius: 90%;
+  div{
+    font-weight: 420;
+    text-align: center;
+    line-height: 20px;
+    height: 25px;
+    width: 25px;
+    position:relative;
+    left: 42%;
+    top:50%;
+    transform: translate(-50%,-50%) scaley(1.8);
+    -webkit-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;
+  }
+  &:hover{
+    background-color: ${colors.InputGray};
+    cursor: pointer;
+  }
+`
+export const StyledH1 = styled.h1`
+  font-size: 20px;
+  color:${colors.HeadlineRed};
+  overflow: scroll;
+`;
+
+export const Description = styled.div`
+  overflow: visible;
+  white-space: normal;
+`
+
+export const StyledLastPage = styled.div`
+height: 100vh;
+width: 100%;
+min-height: fit-content;
+overflow-y: hidden;
+.cont {
+  margin-top: -20px;
+  height:650px;
+  min-height:fit-content;
+  padding-bottom: 40px;
+  /* min-height: fit-content; */
+}
+.popup {
+  position: absolute;
+  left: 80%;
+  top:51px;
+  width: 20%;
+  max-width: 150px;
+  /* height: 200px; */
+  padding: 10px;
+  display: inline;
+  box-shadow: 0 0 20px gray;
+  .x {
+    position: relative;
+    left:80%;
+    top:5%;
+  }
+}
+.cvcontainer {
+  position: relative;
+  top:0;
+  left: 50%;
+
+  transform: translateX(-50%);
+  height:100%;
+  min-width: 300px;
+  width: 45%;
+  /* border-width: 2px;
+  border-color: blue; */
+  border: 1.5px solid gray;
+}
 `

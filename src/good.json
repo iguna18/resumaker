@@ -1,10 +1,6 @@
-GET https://resume.redberryinternship.ge/api/degrees HTTP/1.1
-###
-POST https://resume.redberryinternship.ge/api/cvs HTTP/1.1
-
 {
   "name": "დავით",
-  "surname": "ონიანი",
+  "surnamea": "ონიანი",
   "email": "davitoniani@redberry.ge",
   "phone_number": "+995598123456",
   "experiences": [
@@ -27,18 +23,3 @@ POST https://resume.redberryinternship.ge/api/cvs HTTP/1.1
   "image": "/storage/images/0rI7LyNRJRrokoSKUTb9EKvNuyYFKOvUmDQWoFt6.png",
   "about_me": "ეს არის აღწერა ჩემს შესახებ"
 }
-###
-POST https://resume.redberryinternship.ge/api/cvs HTTP/1.1
-
-{ 
-  "name": "ვახო", 
-  "surname": "ფიფია", 
-  "emaila": "foo@redberry.ge", 
-  "phone_number": "+995587345642", 
-  "experiences": [],
-  "educations": [],
-  "image": "blob:http://localhost:3000/ce952158-129f-49c2-bfda-1b56993f4827", 
-  "about_me": "ვარბუბუ კოლია კორტანეთიაშკაჩყ ალბათ ბლბაბი" 
-}
-###
-GET https://resume.redberryinternship.ge/api/cvs HTTP/1.1

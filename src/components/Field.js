@@ -16,16 +16,33 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
   const dispatch = useDispatch();
   
   const onChange = (event) => {
-    dispatch(setField(
-      {
-        fieldName:`${name}_${index}`, 
-        fieldValue:
-          (
-            name != 'photo' ?
-            event.target.value :
-            URL.createObjectURL(event.target.files[0])
-          )
-      }))
+    if(name != 'photo') {
+      dispatch(setField(
+        {
+          fieldName:`${name}_${index}`, 
+          fieldValue:event.target.value,
+          localStorageFlag:true
+        }))
+    } else {
+      const reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
+      reader.onload = (e) => {
+        dispatch(setField(
+          {
+            fieldName:'photo_0',
+            fieldValue:e.target.result,
+            localStorageFlag:true
+          }
+        ))
+      }
+      // dispatch(setField(
+      // {
+      //   fieldName:'photo_0',
+      //   fieldValue:URL.createObjectURL(event.target.files[0])
+      //   // fieldValue:event.target.files[0]
+      // }
+      // ))
+    }
   }
 
   useEffect(() => {
@@ -49,7 +66,7 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
           case 'lastName':
             return value.length >= 2 && /^[\u10A0-\u10FF]+$/.test(value)
           case 'email':
-            return value.slice(-12) == '@redberry.ge'
+            return value.length > 12 && value.slice(-12) == '@redberry.ge'
           case 'position':
           case 'employer':
           case 'school':
@@ -66,11 +83,12 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
           case 'photo':
             return value != ''
           case 'degree':
-            return value && value !='default'
+            return value && value != 0
           default:
           break;
         }
-      }()
+      }(),
+      localStorageFlag:true
     }, [value]))
   })
     
@@ -131,10 +149,10 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
             name == 'degree' ? 
             <Select value={value} onChange={onChange} name={name} id={name}
               valueValidity={valueValidity} showErrors={showErrors}>
-              <Option value="default">აირჩიეთ ხარისხი</Option>
+              <Option value={0}>აირჩიეთ ხარისხი</Option>
               {
                 otherAtt.degrees.map(d=>(
-                  <Option style={{fontFamily:'Helvetica Neue'}} key={d.id} value={d.title}>
+                  <Option style={{fontFamily:'Helvetica Neue'}} key={d.id} value={d.id}>
                     {d.title}</Option>
                 ))
               }
