@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { Input, UploadLabel, Validation, Textarea, FieldLabel, Select, Option } from "../styles/styles"
 import { useDispatch, useSelector } from 'react-redux'
 import { setField } from "../reducers/slices";
-
+import { BsExclamationTriangleFill } from 'react-icons/bs'
+import { BsCheckCircleFill } from 'react-icons/bs'
 const PHONE_REGEX = /^(\+995)(79\d{7}|5\d{8})$/
 
 const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, showErrors, index}) => {
@@ -133,13 +134,18 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
         {
           ['text','email','number'].some(t=>t==type) && 
           valueValidity &&
-          <Validation>&#10003;</Validation>
+          <Validation>
+            <BsCheckCircleFill/>
+
+          </Validation>
         }
         {
           showErrors &&
           name != 'aboutMe' &&
           !valueValidity &&
-          <Validation err>&#10007;</Validation>
+          <Validation err>
+            <BsExclamationTriangleFill/>
+          </Validation>
         }
         {
           type == 'textarea' ?

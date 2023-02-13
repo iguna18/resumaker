@@ -8,7 +8,9 @@ const colors = {
   SlightGray: '#f6f6f6',
   AshyBlue: '#62A1EB',
   Violet: '#6B40E3',
-  InputGray: '#BCBCBC'
+  InputGray: '#BCBCBC',
+  ValidationGreen: '#98E37E',
+  ValidationRed: '#F02424'
 }
 export default colors
 
@@ -93,12 +95,12 @@ export const Divider = styled.hr`
 `
 export const Validation = styled.div`
   position: absolute;
-  color: ${props => props.err ? 'red' : 'green'};
+  color: ${props => props.err ? colors.ValidationRed : colors.ValidationGreen};
   left: 100%;
   top: 50%;
 
   transform: translate(
-    ${props => props.err ? '10px' : '-10px'},
+    ${props => props.err ? '6px' : '-20px'},
     -50%
   );
 `
@@ -168,7 +170,7 @@ export const FieldLabel = styled.label`
     font-weight:300;
   `}
   ${props => !props.small && props.showErrors && !props.valueValidity && `
-    color:red
+    color:${colors.ValidationRed}
   `}
 `
 export const Select = styled.select`
@@ -276,7 +278,7 @@ export const WelcomeDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-image: url('/assets/wallpaper.jpg');
+  background-image: url('/assets/wallpaper.png');
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;

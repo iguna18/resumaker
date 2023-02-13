@@ -131,7 +131,7 @@ const Cv = ({degrees}) => {
         <p>
           {state['aboutMe_0']}
         </p>
-        <Divider verythin/>
+        {(showExperiences || showEducations) && <Divider verythin/>}
         
         <h3 style={{color:colors.HeadlineRed, display:showExperiences?'':'none'}}>
           ᲒᲐᲛᲝᲪᲓᲘᲚᲔᲑᲐ
