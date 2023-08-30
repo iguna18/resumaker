@@ -62,7 +62,8 @@ const Field = ({under, name, geoName, type, isSmall, otherAtt, placeholder, show
       fieldValue: function(){
         switch (name) {
           case 'number':
-            return PHONE_REGEX.test(value)
+            // return PHONE_REGEX.test(value)
+            return true
           case 'firstName':
           case 'lastName':
             return value.length >= 2 && /^[\u10A0-\u10FF]+$/.test(value)

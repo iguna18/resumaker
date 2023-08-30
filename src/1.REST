@@ -1,0 +1,19 @@
+POST http://localhost:3002/generate-pdf
+Content-Type: text/html
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot GET /</pre>
+</body>
+</html>
+###
+POST http://localhost:3002/getpdf
+Content-Type: application/json
+
+{
+  "name": "ზაქა"
+}

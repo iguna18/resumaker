@@ -13,13 +13,12 @@ const uploadResume = async (resume) => {
   console.log(resume);
   return (
     axios
-      .post(`${baseUrl}/cvs`, resume, {
+      .post('http://localhost:3002/getpdf', resume, {
         'Content-Type': 'application/json', 
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        responseType: "blob"
       })
       .then(response => {
-        console.log(response);
-        console.log(response.data);
         return response.data
       })
   )

@@ -9,7 +9,7 @@ import { setField } from "../reducers/slices"
 import services from '../services/services'
 const handleFinish = (state, navigate) => {
   let resume = {
-    name: state['firstName_0'],
+    name: 'карл йонсон',//state['firstName_0'],
     surname: state['lastName_0'],
     email: state['email_0'],
     phone_number: state['number_0'],
@@ -48,12 +48,22 @@ const handleFinish = (state, navigate) => {
   }
   // fd.append('educations', JSON.stringify(edu))
   services.uploadResume(resume)
-    .then(returnedData => {
-      console.log(returnedData);
+    .then(responsedata => {
+      console.log('\nuploaddddd\n');
+      const blob = new Blob([responsedata], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "generated.pdf";
+      a.click();
+
+      URL.revokeObjectURL(url);
     }).catch(err => {
       navigate(`/${4}`)
       console.log(err.response.data)
       console.log(err)
+      console.error("Error generating or downloading PDF:", err)
     })
 }
 
