@@ -18,13 +18,18 @@ const handleFinish = (state, navigate) => {
     image: state['photo_0'].split(',')[1],
     about_me: state['aboutMe_0'] ? state['aboutMe_0'] : null
   }
-  // const fd = new FormData();
-  // fd.append('name', state['firstName_0'])
-  // fd.append('surname', state['lastName_0'])
-  // fd.append('email', state['email_0'])
-  // fd.append('phone_number', state['number_0'])
-  // fd.append('image', state['photo_0'], 'image.png')
-  // fd.append('about_me', state['aboutMe_0'] ? state['aboutMe_0'] : null)
+  console.log(state['photo_0'])
+  const fd = new FormData();
+  fd.append('name', state['firstName_0'])
+  fd.append('surname', state['lastName_0'])
+  fd.append('email', state['email_0'])
+  fd.append('phone_number', state['number_0'])
+  const base64Data = state['photo_0'].split(",")[1];
+  const binaryData = new Uint8Array(atob(base64Data).split('').map(char => char.charCodeAt(0)));
+  const blob = new Blob([binaryData], { type: "image/png" });
+
+  fd.append('image', blob, 'image.png')
+  fd.append('about_me', state['aboutMe_0'] ? state['aboutMe_0'] : null)
   
   // const exp = []
   for (let i = 0; i < state['page2FormCounter']; i++) {
@@ -47,7 +52,7 @@ const handleFinish = (state, navigate) => {
     })
   }
   // fd.append('educations', JSON.stringify(edu))
-  services.uploadResume(resume)
+  services.uploadResume(fd)
     .then(responsedata => {
       console.log('\nuploaddddd\n');
       const blob = new Blob([responsedata], { type: "application/pdf" });
