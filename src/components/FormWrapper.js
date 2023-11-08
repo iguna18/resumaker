@@ -22,7 +22,9 @@ const handleFinish = (state, navigate) => {
   const fd = new FormData();
   fd.append('name', state['firstName_0'])
   fd.append('surname', state['lastName_0'])
-  fd.append('email', state['email_0'])
+  if(state['email_0']) {
+    fd.append('email', state['email_0'])
+  }
   fd.append('phone_number', state['number_0'])
   const base64Data = state['photo_0'].split(",")[1];
   const binaryData = new Uint8Array(atob(base64Data).split('').map(char => char.charCodeAt(0)));
@@ -31,9 +33,9 @@ const handleFinish = (state, navigate) => {
   fd.append('image', blob, 'image.png')
   fd.append('about_me', state['aboutMe_0'] ? state['aboutMe_0'] : null)
   
-  // const exp = []
+  const exp = []
   for (let i = 0; i < state['page2FormCounter']; i++) {
-    resume.experiences.push({
+    exp.push({
       position:state[`position_${i}`],
       employer:state[`employer_${i}`],
       start_date:(state[`workstart_${i}`] || '').replaceAll('-','/'),
@@ -41,17 +43,17 @@ const handleFinish = (state, navigate) => {
       description:state[`workdescription_${i}`]
     })
   }
-  // fd.append('experiences', JSON.stringify(exp))
-  // const edu = []
+  fd.append('experiences', JSON.stringify(exp))
+  const edu = []
   for (let i = 0; i < state['page3FormCounter']; i++) {
-    resume.educations.push({
+    edu.push({
       institute:state[`school_${i}`],
       degree_id:parseInt((state[`degree_${i}`] || '1')),
       due_date:(state[`schoolend_${i}`] || '').replaceAll('-','/'),
       description:state[`schooldescription_${i}`]
     })
   }
-  // fd.append('educations', JSON.stringify(edu))
+  fd.append('educations', JSON.stringify(edu))
   services.uploadResume(fd)
     .then(responsedata => {
       console.log('\nuploaddddd\n');
