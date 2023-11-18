@@ -12,7 +12,7 @@ app.use(bodyParser.json({limit:'10mb'}));
 
 const storage = multer.memoryStorage(); // Store the file data in memory
 const upload = multer({ storage }); 
-//adding line to understand git
+
 app.post("/getpdf", upload.single("image"), async (req, res) => {
   const { name, email, surname, phone_number, about_me, experiences, educations } = req.body;
   let parsedExperiences = [], parsedEducations = []
