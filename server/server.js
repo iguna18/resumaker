@@ -7,7 +7,7 @@ const app = express();
 const multer = require("multer");
 const port = 3002;
 app.use(cors())
-app.use(express.static('build'))
+app.use(express.static('../client/build'))
 app.use(bodyParser.json({limit:'10mb'}));
 
 const storage = multer.memoryStorage(); // Store the file data in memory
